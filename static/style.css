@@ -1,0 +1,88 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #1e3c72, #2a5298);
+    margin: 0;
+    color: white;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.form-container {
+    background: white;
+    color: black;
+    padding: 30px;
+    width: 420px;
+    margin-top: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+input,
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #1e3c72;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #16325c;
+}
+
+.result-card {
+    margin-top: 20px;
+    padding: 20px;
+    background: white;
+    color: black;
+    border-radius: 10px;
+}
+
+.status {
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.low {
+    background: #d4edda;
+    color: #155724;
+}
+
+.high {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.download-btn {
+    background: #4CAF50;
+}
+
+.download-btn:hover {
+    background: #388E3C;
+}
+
+canvas {
+    max-width: 280px;
+    margin: 20px auto;
+}

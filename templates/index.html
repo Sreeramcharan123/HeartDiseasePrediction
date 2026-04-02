@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Heart Disease Risk Prediction</title>
+
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.jpg') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <div class="main-container">
+
+        <div class="header">
+            <h1>❤️ Heart Disease Risk Prediction</h1>
+            <p>AI-powered health risk analysis</p>
+        </div>
+
+        <div class="form-container">
+
+            <form action="/predict" method="post">
+
+                <h2>Patient Details</h2>
+
+                <input type="text" name="name" placeholder="Enter Name" required>
+                <input type="number" name="age" placeholder="Enter Age" required>
+
+                <select name="sex" required>
+                    <option value="">Select Gender</option>
+                    <option value="1">Male</option>
+                    <option value="0">Female</option>
+                </select>
+
+                <select name="cp" required>
+                    <option value="">Select Chest Pain Type</option>
+                    <option value="0">Typical Angina</option>
+                    <option value="1">Atypical Angina</option>
+                    <option value="2">Non-anginal Pain</option>
+                    <option value="3">No Chest Pain</option>
+                </select>
+
+                <input type="number" name="trestbps" placeholder="Blood Pressure (mm Hg)" required>
+                <input type="number" name="chol" placeholder="Cholesterol (mg/dl)" required>
+                <input type="number" name="thalach" placeholder="Maximum Heart Rate" required>
+
+                <button type="submit">Predict Risk</button>
+
+            </form>
+
+            {% if prediction_text %}
+
+            <div class="result-card" data-risk="{{ risk }}">
+
+                <h2>🩺 Heart Health Report</h2>
+
+                <p><b>Name:</b> {{ name }}</p>
+                <p><b>Age:</b> {{ request.form.age }}</p>
+                <p><b>Gender:</b> {{ 'Male' if request.form.sex=='1' else 'Female' }}</p>
+
+                <p class="status {{ 'low' if prediction_text=='Low Risk' else 'high' }}">
+                    {{ prediction_text }}
+                </p>
+
+                <p><b>Risk Level:</b> {{ risk }}%</p>
+
+                <p>
+                    <b>Interpretation:</b>
+                    {% if risk < 30 %} Low risk – maintain healthy lifestyle {% elif risk < 70 %} Moderate risk – take
+                        precautions {% else %} High risk – consult doctor {% endif %} </p>
+
+                        <canvas id="chart"></canvas>
+
+                        <h3>💡 Recommendations</h3>
+
+                        <ul>
+                            <li>Exercise at least 30 minutes daily</li>
+                            <li>Eat low-fat and balanced diet</li>
+                            <li>Avoid smoking and alcohol</li>
+                            <li>Manage stress using yoga/meditation</li>
+                            <li>Maintain healthy body weight</li>
+                        </ul>
+
+                        <a href="/download">
+                            <button class="download-btn">Download Full Report</button>
+                        </a>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <script>
+        const card = document.querySelector(".result-card");
+
+        if (card) {
+            const riskValue = parseFloat(card.getAttribute("data-risk")) || 0;
+            const safeValue = 100 - riskValue;
+
+            new Chart(document.getElementById("chart"), {
+                type: 'pie',
+                data: {
+                    labels: ['Risk', 'Safe'],
+                    datasets: [{
+                        data: [riskValue, safeValue],
+                        backgroundColor: ['#ff4d4d', '#4CAF50']
+                    }]
+                }
+            });
+        }
+    </script>
+
+</body>
+
+</html>
